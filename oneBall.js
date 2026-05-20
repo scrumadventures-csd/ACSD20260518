@@ -1,9 +1,12 @@
 // backend/app.js
 const express = require('express');
+const cors = require('cors');
 const registerGame = require('./registerGame');
 const app = express();
 
+app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.post('/api/ball/total', (req, res) => {
   const { pinsKnockedDown } = req.body;
