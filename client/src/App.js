@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import RegisterGame from './RegisterGame';
 
 function App() {
   return (
@@ -7,9 +8,10 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Welcome ACSD20220705!
+          Welcome ACSD20260518!
         </p>
       </header>
+      <RegisterGame />
     </div>
   );
 }

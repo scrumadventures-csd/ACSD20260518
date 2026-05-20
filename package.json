@@ -4,7 +4,7 @@
   "description": "Repository for the A-CSD course in July 2022",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "jest ./tests/"
   },
@@ -27,5 +27,8 @@
     "jest": "^28.1.2",
     "js-unit": "^1.1.3",
     "nodemon": "^2.0.19"
+  },
+  "devDependencies": {
+    "supertest": "^7.2.2"
   }
 }
