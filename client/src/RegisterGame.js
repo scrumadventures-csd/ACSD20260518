@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import './RegisterGame.css';
+import RollBalls from './RollBalls';
 
 function RegisterGame() {
+  const [bowler, setBowler] = useState('');
   const [frames, setFrames] = useState(10);
   const [pins, setPins] = useState(10);
   const [rolls, setRolls] = useState(2);
   const [test, setTest] = useState('');
-  const [result, setResult] = useState(null);
+  const [game, setGame] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -14,13 +16,13 @@ function RegisterGame() {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    setResult(null);
+    setGame(null);
 
     try {
       const response = await fetch('/api/registerGame', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ frames, pins, rolls, test }),
+        body: JSON.stringify({ bowler, frames, pins, rolls, test }),
       });
 
       if (!response.ok) {
@@ -28,7 +30,8 @@ function RegisterGame() {
       }
 
       const data = await response.json();
-      setResult(data);
+      setGame({ ...(data || {}), bowler });
+      setBowler('');
       setFrames(10);
       setPins(10);
       setRolls(2);
@@ -44,6 +47,18 @@ function RegisterGame() {
     <div className="RegisterGame">
       <h2>Register New Game</h2>
       <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="bowler">Bowler:</label>
+          <input
+            id="bowler"
+            type="text"
+            value={bowler}
+            onChange={(e) => setBowler(e.target.value)}
+            placeholder="Enter bowler name"
+            required
+          />
+        </div>
+
         <div className="form-group">
           <label htmlFor="frames">Frames:</label>
           <input
@@ -100,12 +115,15 @@ function RegisterGame() {
 
       {error && <div className="error-message">Error: {error}</div>}
 
-      {result && (
+      {game && (
         <div className="result-message">
           <h3>Game Registered Successfully</h3>
-          <pre>{JSON.stringify(result, null, 2)}</pre>
+          <p>Registered for: <strong>{game.bowler}</strong></p>
+          <pre>{JSON.stringify(game, null, 2)}</pre>
         </div>
       )}
+
+      {game && <RollBalls game={game} />}
     </div>
   );
 }

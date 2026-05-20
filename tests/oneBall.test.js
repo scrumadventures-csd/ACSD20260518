@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../oneBall');
+const app = require('../rollBalls');
 
 describe('POST /api/ball/total', () => {
   it('should return total pins knocked down for valid input', async () => {

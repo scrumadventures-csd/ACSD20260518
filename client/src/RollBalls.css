@@ -1,0 +1,101 @@
+.RollBalls {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.RollBalls .game-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.RollBalls .game-info span {
+  background: #fff;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.RollBalls .roll-form {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.RollBalls .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.RollBalls input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.RollBalls button {
+  width: fit-content;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.RollBalls button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.RollBalls .score-sheet-wrapper {
+  margin-top: 1rem;
+}
+
+.RollBalls .score-sheet {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+.RollBalls .score-sheet th,
+.RollBalls .score-sheet td {
+  border: 1px solid #ccc;
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+}
+
+.RollBalls .score-sheet th {
+  background: #f1f1f1;
+}
+
+.RollBalls .empty-state {
+  text-align: center;
+  color: #666;
+  padding: 1rem 0;
+}
+
+.RollBalls .roll-summary {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-weight: 600;
+}
+
+.RollBalls .result-message {
+  margin-top: 1rem;
+  color: #0563bf;
+}
+
+.RollBalls .error-message {
+  margin-top: 1rem;
+  color: #a94442;
+}
