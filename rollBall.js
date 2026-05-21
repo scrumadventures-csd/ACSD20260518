@@ -65,6 +65,19 @@ app.post('/api/roll', async (req, res) => {
   }
 });
 
+function sumRolls(rolls) {
+  if (!Array.isArray(rolls) || rolls.length === 0) {
+    throw new Error('sumRolls requires a non-empty array of roll values');
+  }
+
+  return rolls.reduce((total, pins) => {
+    if (!Number.isInteger(pins) || pins < 0 || pins > 10) {
+      throw new Error('sumRolls accepts only integer pin values between 0 and 10');
+    }
+    return total + pins;
+  }, 0);
+}
+
 if (require.main === module) {
   const PORT = process.env.PORT || 3001;
   app.listen(PORT, () => {
@@ -72,4 +85,5 @@ if (require.main === module) {
   });
 }
 
+app.sumRolls = sumRolls;
 module.exports = app; // for testing purpose

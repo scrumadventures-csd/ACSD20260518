@@ -45,6 +45,29 @@ describe('POST /api/roll', () => {
     );
   });
 
+  it('should call pinsetter twice for two balls in one frame and total 6 pins', async () => {
+    axios.get
+      .mockResolvedValueOnce({ data: '2' })
+      .mockResolvedValueOnce({ data: '4' });
+
+    const response1 = await request(app).post('/api/roll').send({ id: 'game-123' });
+    const response2 = await request(app).post('/api/roll').send({ id: 'game-123' });
+
+    expect(response1.statusCode).toBe(200);
+    expect(response1.body).toEqual({ roll: 2, ended: false });
+    expect(response2.statusCode).toBe(200);
+    expect(response2.body).toEqual({ roll: 4, ended: false });
+    expect(app.sumRolls([response1.body.roll, response2.body.roll])).toBe(6);
+    expect(axios.get).toHaveBeenNthCalledWith(
+      1,
+      'http://pinsetter.herokuapp.com/pinsetter/?action=roll&id=game-123'
+    );
+    expect(axios.get).toHaveBeenNthCalledWith(
+      2,
+      'http://pinsetter.herokuapp.com/pinsetter/?action=roll&id=game-123'
+    );
+  });
+
   it('should return ended=true when the pinsetter API returns a period', async () => {
     axios.get.mockResolvedValue({ data: '.' });
 
