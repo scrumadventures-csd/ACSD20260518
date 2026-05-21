@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './RegisterGame.css';
-import RollBalls from './RollBalls';
+import RollBall from './RollBall';
 
 function RegisterGame() {
   const [bowler, setBowler] = useState('');
@@ -30,12 +30,13 @@ function RegisterGame() {
       }
 
       const data = await response.json();
-      setGame({ ...(data || {}), bowler });
-      setBowler('');
-      setFrames(10);
-      setPins(10);
-      setRolls(2);
-      setTest('');
+      const gameId = data?.gameId ?? data?.id ?? data;
+      setGame({ gameId, bowler, frames, pins, rolls, test });
+      setBowler(bowler);
+      setFrames(frames);
+      setPins(pins);
+      setRolls(rolls);
+      setTest(test);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -97,14 +98,13 @@ function RegisterGame() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="test">Test Sequence (e.g., 1-2-3-4-5-6-7-8-9/X12):</label>
+          <label htmlFor="test">Test Sequence (optional, e.g. 1-2-3-4-5-6-7-8-9/X12):</label>
           <input
             id="test"
             type="text"
             value={test}
             onChange={(e) => setTest(e.target.value)}
             placeholder="e.g., 1-2-3-4-5-6-7-8-9/X12"
-            required
           />
         </div>
 
@@ -118,12 +118,11 @@ function RegisterGame() {
       {game && (
         <div className="result-message">
           <h3>Game Registered Successfully</h3>
-          <p>Registered for: <strong>{game.bowler}</strong></p>
-          <pre>{JSON.stringify(game, null, 2)}</pre>
+          <p>Registered Game ID: <strong>{game.gameId || game.id || 'Unknown'}</strong></p>
         </div>
       )}
 
-      {game && <RollBalls game={game} />}
+      {game && <RollBall game={game} />}
     </div>
   );
 }

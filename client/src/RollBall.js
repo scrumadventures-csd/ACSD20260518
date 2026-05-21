@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import './RollBalls.css';
+import './RollBall.css';
 
-function RollBalls({ game }) {
-  const [pinsKnockedDown, setPinsKnockedDown] = useState(0);
+function RollBall({ game }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [rolls, setRolls] = useState([]);
+  const [ended, setEnded] = useState(false);
+  const [lastRoll, setLastRoll] = useState(null);
 
   const rollsPerFrame = Number(game?.rolls) || 2;
   const frames = Number(game?.frames) || 10;
@@ -14,9 +15,10 @@ function RollBalls({ game }) {
 
   useEffect(() => {
     setRolls([]);
-    setPinsKnockedDown(0);
     setError(null);
     setLoading(false);
+    setEnded(false);
+    setLastRoll(null);
   }, [game]);
 
   const scoreRows = useMemo(() => {
@@ -38,8 +40,8 @@ function RollBalls({ game }) {
 
   const handleRoll = async (event) => {
     event.preventDefault();
-    if (rolls.length >= maxRolls) {
-      setError('All balls for this game have been rolled.');
+    if (rolls.length >= maxRolls || ended) {
+      setError('All ball for this game have been rolled.');
       return;
     }
 
@@ -47,10 +49,10 @@ function RollBalls({ game }) {
     setError(null);
 
     try {
-      const response = await fetch('/api/ball/total', {
+      const response = await fetch('/api/roll', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pinsKnockedDown }),
+        body: JSON.stringify({ id: game?.gameId }),
       });
 
       if (!response.ok) {
@@ -58,7 +60,14 @@ function RollBalls({ game }) {
       }
 
       const data = await response.json();
-      setRolls((prevRolls) => [...prevRolls, data.total]);
+      if (data.roll === '.') {
+        setEnded(true);
+        setLastRoll('.');
+        setError('Game ended. No more rolls are available.');
+      } else {
+        setRolls((prevRolls) => [...prevRolls, data.roll]);
+        setLastRoll(data.roll);
+      }
     } catch (err) {
       setError(err.message);
     } finally {
@@ -67,29 +76,16 @@ function RollBalls({ game }) {
   };
 
   return (
-    <div className="RollBalls">
-      <h3>Roll Balls</h3>
+    <div className="rollBall">
+      <h3>Roll ball</h3>
       <div className="game-info">
         <span>Bowler: {bowlerName}</span>
         <span>Frames: {frames}</span>
         <span>Rolls per frame: {rollsPerFrame}</span>
       </div>
       <form onSubmit={handleRoll} className="roll-form">
-        <div className="form-group">
-          <label htmlFor="pinsKnockedDown">Pins knocked down:</label>
-          <input
-            id="pinsKnockedDown"
-            type="number"
-            min="0"
-            max="10"
-            value={pinsKnockedDown}
-            onChange={(e) => setPinsKnockedDown(Number(e.target.value))}
-            required
-          />
-        </div>
-
-        <button type="submit" disabled={loading || rolls.length >= maxRolls}>
-          {loading ? 'Rolling...' : 'Roll next ball'}
+        <button type="submit" disabled={loading || rolls.length >= maxRolls || ended}>
+          {loading ? 'Rolling...' : ended ? 'Game ended' : 'Roll next ball'}
         </button>
       </form>
 
@@ -135,4 +131,4 @@ function RollBalls({ game }) {
   );
 }
 
-export default RollBalls;
+export default RollBall;

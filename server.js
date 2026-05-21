@@ -1,3 +1,3 @@
-const app = require("./rollBalls");
+const app = require("./rollball");
 
 module.exports = app;

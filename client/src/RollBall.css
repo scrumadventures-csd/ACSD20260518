@@ -1,4 +1,4 @@
-.RollBalls {
+.RollBall {
   margin-top: 1.5rem;
   padding: 1rem;
   border: 1px solid #ccc;
@@ -6,7 +6,7 @@
   background: #f9f9f9;
 }
 
-.RollBalls .game-info {
+.RollBall .game-info {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
@@ -14,25 +14,25 @@
   font-size: 0.95rem;
 }
 
-.RollBalls .game-info span {
+.RollBall .game-info span {
   background: #fff;
   padding: 0.5rem 0.75rem;
   border: 1px solid #ddd;
   border-radius: 6px;
 }
 
-.RollBalls .roll-form {
+.RollBall .roll-form {
   display: grid;
   gap: 1rem;
   margin-bottom: 1rem;
 }
 
-.RollBalls .form-group {
+.RollBall .form-group {
   display: flex;
   flex-direction: column;
 }
 
-.RollBalls input {
+.RollBall input {
   width: 100%;
   padding: 0.5rem;
   margin-top: 0.25rem;
@@ -40,7 +40,7 @@
   border-radius: 4px;
 }
 
-.RollBalls button {
+.RollBall button {
   width: fit-content;
   padding: 0.6rem 1rem;
   border: none;
@@ -50,39 +50,39 @@
   cursor: pointer;
 }
 
-.RollBalls button:disabled {
+.RollBall button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.RollBalls .score-sheet-wrapper {
+.RollBall .score-sheet-wrapper {
   margin-top: 1rem;
 }
 
-.RollBalls .score-sheet {
+.RollBall .score-sheet {
   width: 100%;
   border-collapse: collapse;
   margin-top: 0.5rem;
 }
 
-.RollBalls .score-sheet th,
-.RollBalls .score-sheet td {
+.RollBall .score-sheet th,
+.RollBall .score-sheet td {
   border: 1px solid #ccc;
   padding: 0.65rem 0.75rem;
   text-align: left;
 }
 
-.RollBalls .score-sheet th {
+.RollBall .score-sheet th {
   background: #f1f1f1;
 }
 
-.RollBalls .empty-state {
+.RollBall .empty-state {
   text-align: center;
   color: #666;
   padding: 1rem 0;
 }
 
-.RollBalls .roll-summary {
+.RollBall .roll-summary {
   margin-top: 1rem;
   display: flex;
   flex-wrap: wrap;
@@ -90,12 +90,12 @@
   font-weight: 600;
 }
 
-.RollBalls .result-message {
+.RollBall .result-message {
   margin-top: 1rem;
   color: #0563bf;
 }
 
-.RollBalls .error-message {
+.RollBall .error-message {
   margin-top: 1rem;
   color: #a94442;
 }
